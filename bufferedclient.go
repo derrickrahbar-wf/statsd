@@ -196,3 +196,7 @@ func (sb *StatsdBuffer) flush() (err error) {
 
 	return nil
 }
+
+func (sb *StatsdBuffer) SendData() {
+	sb.flushChannel <- true
+}
