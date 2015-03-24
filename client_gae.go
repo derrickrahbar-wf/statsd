@@ -5,12 +5,12 @@ package statsd
 import (
 	"fmt"
 	"log"
-	"net"
 	"os"
 	"strings"
 	"time"
 
 	"appengine"
+	"appengine/net"
 	"appengine/socket"
 	"github.com/derrickrahbar-wf/statsd/event"
 )
@@ -65,7 +65,7 @@ func (c *StatsdClient) CreateSocket() error {
 		host_ip_address, _ := socket.LookupIP(c.c, c.addr)
 		c.ip_address = host_ip_address[0].String() + c.port
 	}
-	conn, err := net.DialTimeout("udp", c.ip_address, 5*time.Second)
+	conn, err := net.DialTimeout(c.c, "udp", c.ip_address, 5*time.Second)
 	if err != nil {
 		return err
 	}
